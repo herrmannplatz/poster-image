@@ -10,12 +10,17 @@
   'use strict'
 
   var captureFrame = function (video) {
-    var canvas = document.createElement('canvas')
-    canvas.width = video.videoWidth
-    canvas.height = video.videoHeight
-    canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height)
-    return canvas.toDataURL()
-  };
+    return new Promise(function(resolve) {
+      var canvas = document.createElement('canvas')
+      canvas.width = video.videoWidth
+      canvas.height = video.videoHeight
+      canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height)
+      canvas.toBlob(function(blob) {
+        URL.revokeObjectURL(video.src)
+        resolve(blob)
+      })
+    })
+  }
 
   var loadVideoSrc = function (videoSrc) {
     return new Promise(function(resolve) {
@@ -53,4 +58,4 @@
   }
 
   return api
-}));
+}))
