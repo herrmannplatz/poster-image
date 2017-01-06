@@ -35,7 +35,7 @@
         resolve(video)
       });
 
-      video.addEventListener('error', function() {
+      video.addEventListener('error', function(error) {
         reject(error)
       });
     })
