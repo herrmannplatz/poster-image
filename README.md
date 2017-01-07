@@ -20,7 +20,7 @@ poster(file).then(function(blob) {
 
 ## browser support
 
-Tested with current Chrome, Firefox and Edge.
+Tested with latest Chrome and Firefox.
 
 ## api
 
