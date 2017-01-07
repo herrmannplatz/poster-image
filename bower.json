@@ -1,0 +1,26 @@
+{
+  "name": "poster-image",
+  "description": "Capture preview image from a video file",
+  "main": "poster.js",
+  "authors": [
+    "Rene Herrmann"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "js",
+    "capture",
+    "frame",
+    "poster",
+    "screenshot",
+    "video",
+    "video poster"
+  ],
+  "homepage": "https://github.com/herrmannplatz/poster-image",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
