@@ -9,16 +9,34 @@
 }(this, function () {
   'use strict'
 
-  var captureFrame = function (video) {
+  var supportedEncodings = ['jpg', 'png', 'webp']
+
+  var defaults = {
+    encoding: 'png',
+    dataURI: false
+  }
+
+  var captureFrame = function (video, mimeType, asDataURI) {
     return new Promise(function(resolve) {
       var canvas = document.createElement('canvas')
       canvas.width = video.videoWidth
       canvas.height = video.videoHeight
       canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height)
-      canvas.toBlob(function(blob) {
-        URL.revokeObjectURL(video.src)
-        resolve(blob)
-      })
+      
+      if (asDataURI === true) {
+        resolve(canvas.toDataURL(mimeType))
+      } else {
+        canvas.toBlob(function(blob) {
+          resolve(blob)
+        }, mimeType)
+      }
+    })
+  }
+
+  var loadVideoFromFile = function(file) {
+    return loadVideoSrc(URL.createObjectURL(file)).then(function(video) {
+      URL.revokeObjectURL(video.src)
+      return video
     })
   }
 
@@ -41,17 +59,21 @@
     })
   }
 
-  var api = function(file) {
+  var api = function(file, options) {
     if (!(file instanceof Blob)) {
-      throw new Error('Expected file to be of type Blob')
+      throw new TypeError('Expected file to be of type Blob')
     }
 
-    return Promise.resolve().then(function() {
-      return URL.createObjectURL(file)
-    }).then(function(videoSrc) {
-      return loadVideoSrc(videoSrc)
-    }).then(function(video) {
-      return captureFrame(video)
+    var settings = Object.assign({}, defaults, options)
+
+    if (supportedEncodings.indexOf(settings.encoding) === -1) {
+      throw new TypeError('Supported encodings are jpg, png or webp')
+    }
+
+    var mimeType = 'image/' + settings.encoding
+
+    return loadVideoFromFile(file).then(function(video) {
+      return captureFrame(video, mimeType, settings.dataURI)
     }).catch(function(error) {
       throw new Error('Failed to capture poster frame: ' + error.message)
     })
