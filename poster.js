@@ -15,10 +15,15 @@
       canvas.width = video.videoWidth
       canvas.height = video.videoHeight
       canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height)
-      canvas.toBlob(function(blob) {
-        URL.revokeObjectURL(video.src)
-        resolve(blob)
-      })
+      URL.revokeObjectURL(video.src)
+
+      if (canvas.msToBlob !== undefined) {
+        resolve(canvas.msToBlob())
+      } else {
+        canvas.toBlob(function(blob) {
+          resolve(blob)
+        })
+      }
     })
   }
 
