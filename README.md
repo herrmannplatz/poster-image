@@ -1,11 +1,11 @@
 # poster-image
 
-### Capture preview image from a video file. Useful when dealing with videos uploaded by the user.
+Capture preview image from a video file. Useful when dealing with videos uploaded by the user.
 
 ## usage
 
 HTML
-```
+```html
 <script src="poster.js"></script>
 ```
 
