@@ -28,7 +28,7 @@
   }
 
   var loadVideoSrc = function (videoSrc) {
-    return new Promise(function(resolve) {
+    return new Promise(function(resolve, reject) {
       var video = document.createElement('video')
       video.src = videoSrc
 
