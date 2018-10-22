@@ -1,6 +1,6 @@
 {
   "name": "poster-image",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Capture preview image from a video file",
   "main": "poster.js",
   "scripts": {
